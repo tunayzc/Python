@@ -4,7 +4,7 @@ from time import sleep
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.action_chains import ActionChains 
-
+import pytest
 #prefix == ön ek test
 #postfix 
 class Test_DemoClass:
@@ -24,13 +24,14 @@ class Test_DemoClass:
 
     def test_demo2(self):
         assert True
-    def test_invalid_login(self):
+    @pytest.mark.parametrize("username,password",[("1","1"),("kullaniciadim","şifrem")])
+    def test_invalid_login(self,username,password):
         WebDriverWait(self.driver, 5).until(ec.visibility_of_element_located((By.ID,"user-name")))
         userNameInput= self.driver.find_element(By.ID, "user-name")
         userPwInput= self.driver.find_element(By.ID, "password")
         WebDriverWait(self.driver, 5).until(ec.visibility_of_element_located((By.ID,"password")))
-        userNameInput.send_keys("1")
-        userPwInput.send_keys("1")
+        userNameInput.send_keys(username)
+        userPwInput.send_keys(password)
         WebDriverWait(self.driver, 5).until(ec.visibility_of_element_located((By.ID,"login-button")))
         loginButton = self.driver.find_element(By.ID, "login-button")
         loginButton.click()
