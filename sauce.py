@@ -4,14 +4,14 @@ from time import sleep
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.action_chains import ActionChains 
-
+import globalConstants
 
 
 class Test_Sauce:
     def __init__(self):
         self.driver=webdriver.Chrome
         self.driver.maximize_window
-        self.driver.get("https://www.saucedemo.com/")
+        self.driver.get(globalConstants.URL)
     def test_invalid_login(self):
         WebDriverWait(self.driver, 5).until(ec.visibility_of_element_located((By.ID,"user-name")))
         userNameInput= self.driver.find_element(By.ID, "user-name")
@@ -27,7 +27,7 @@ class Test_Sauce:
         print(f"Test Sonucu: {testResult}")
         sleep(1)
     def test_valid_login(self):
-        self.driver.get("https://www.saucedemo.com/")
+        self.driver.get(globalConstants.URL)
         WebDriverWait(self.driver, 5).until(ec.visibility_of_element_located((By.ID,"user-name")))
         userNameInput= self.driver.find_element(By.ID, "user-name")
         WebDriverWait(self.driver, 5).until(ec.visibility_of_element_located((By.ID,"password")))
